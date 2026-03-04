@@ -68,6 +68,11 @@ books_df_v01["Was Late"] = (
     books_df_v01["Days Borrowed"] > books_df_v01["Days allowed to borrow"]
 )
 
+# Was returned date borrowed negative?
+books_df_v01["Date Miss Match"] = (
+    books_df_v01["Days Borrowed"] < 0
+)
+
 # Number of days late (no negatives)
 books_df_v01["Days Late"] = (
     books_df_v01["Days Borrowed"] - books_df_v01["Days allowed to borrow"]

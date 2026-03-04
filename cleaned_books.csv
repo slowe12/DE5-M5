@@ -1,0 +1,20 @@
+Id,Books,Book checkout,Book Returned,Days allowed to borrow,Customer ID,Days Borrowed,Was Late,Date Miss Match,Days Late,Returned Early,Checkout Day Name,Checkout Month,Checkout Year,Late Fee
+1.0,Catcher in the Rye ,2023-02-20,2023-02-25,14,1.0,5,False,False,0,True,Monday,February,2023,0.0
+2.0,Lord of the rings the two towers,2023-03-24,2023-03-21,14,2.0,-3,False,True,0,True,Friday,March,2023,0.0
+3.0,Lord of the rings the return of the kind,2023-03-29,2023-03-25,14,3.0,-4,False,True,0,True,Wednesday,March,2023,0.0
+4.0,The hobbit,2023-04-02,2023-03-25,14,4.0,-8,False,True,0,True,Sunday,April,2023,0.0
+5.0,Dune ,2023-04-02,2023-03-25,14,5.0,-8,False,True,0,True,Sunday,April,2023,0.0
+6.0,Little Women,2023-04-02,2023-05-01,14,1.0,29,True,False,15,False,Sunday,April,2023,15.0
+7.0,IT,2063-04-10,2023-04-03,14,6.0,-14617,False,True,0,True,Tuesday,April,2063,0.0
+8.0,Misery ,2023-04-15,2023-04-03,14,7.0,-12,False,True,0,True,Saturday,April,2023,0.0
+9.0,Catch 22,2023-04-15,2023-04-16,14,7.0,1,False,False,0,True,Saturday,April,2023,0.0
+10.0,Animal Farm ,2023-04-20,2023-04-24,14,2.0,4,False,False,0,True,Thursday,April,2023,0.0
+11.0,1984,2023-04-23,2023-04-27,14,8.0,4,False,False,0,True,Sunday,April,2023,0.0
+12.0,Little Women,2023-04-02,2023-05-01,14,1.0,29,True,False,15,False,Sunday,April,2023,15.0
+13.0,East of Eden,2023-04-30,2023-05-05,14,2.0,5,False,False,0,True,Sunday,April,2023,0.0
+14.0,America Is in the Heart,2023-05-01,2023-05-07,14,3.0,6,False,False,0,True,Monday,May,2023,0.0
+15.0,Wuthering Heights,2023-05-01,2023-05-10,14,9.0,9,False,False,0,True,Monday,May,2023,0.0
+16.0,Dark Tales,2023-05-15,2023-06-01,14,2.0,17,True,False,3,False,Monday,May,2023,3.0
+18.0,Les Miserables,2023-06-03,2023-06-07,14,5.0,4,False,False,0,True,Saturday,June,2023,0.0
+19.0,Dracula,2023-06-10,2023-07-10,14,10.0,30,True,False,16,False,Saturday,June,2023,16.0
+20.0,Frankenstein,2023-06-01,2023-06-20,14,2.0,19,True,False,5,False,Thursday,June,2023,5.0
