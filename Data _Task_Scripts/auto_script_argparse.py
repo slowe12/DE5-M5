@@ -37,6 +37,20 @@ def convert_weeks_to_days(df):
     return df
 
 
+def enrich_books(df: pd.DataFrame, late_fee: float = 1.0) -> pd.DataFrame:
+    """Add calculated columns to the books DataFrame."""
+    df["Days Borrowed"] = (df["Book Returned"] - df["Book checkout"]).dt.days
+    df["Was Late"] = df["Days Borrowed"] > df["Days allowed to borrow"]
+    df["Date Miss Match"] = df["Days Borrowed"] < 0
+    df["Days Late"] = (df["Days Borrowed"] - df["Days allowed to borrow"]).clip(lower=0)
+    df["Returned Early"] = df["Days Borrowed"] < df["Days allowed to borrow"]
+    df["Checkout Day Name"] = df["Book checkout"].dt.day_name()
+    df["Checkout Month"] = df["Book checkout"].dt.month_name()
+    df["Checkout Year"] = df["Book checkout"].dt.year
+    df["Late Fee"] = df["Days Late"] * late_fee
+    return df
+
+
 def main():
     # -------------------------
     # Argument Parser Setup
@@ -44,42 +58,15 @@ def main():
     parser = argparse.ArgumentParser(
         description="Clean and enrich library book checkout data."
     )
-    
+
     ROOT = Path.cwd()
     DATA_DIR = ROOT / "data"
 
-    parser.add_argument(
-        "--books",
-        type=str,
-        default=str(DATA_DIR / "03_Library Systembook.csv")
-    )
-
-    parser.add_argument(
-        "--customers",
-        type=str,
-        default=str(DATA_DIR / "03_Library SystemCustomers.csv")
-    )
-
-    parser.add_argument(
-        "--late-fee",
-        type=float,
-        default=1.0,
-        help="Late fee per day (default = 1.0)"
-    )
-
-    parser.add_argument(
-        "--output-books",
-        type=str,
-        default="cleaned_books.csv",
-        help="Output filename for cleaned books"
-    )
-
-    parser.add_argument(
-        "--output-customers",
-        type=str,
-        default="cleaned_cust.csv",
-        help="Output filename for cleaned customers"
-    )
+    parser.add_argument("--books", type=str, default=str(DATA_DIR / "03_Library Systembook.csv"))
+    parser.add_argument("--customers", type=str, default=str(DATA_DIR / "03_Library SystemCustomers.csv"))
+    parser.add_argument("--late-fee", type=float, default=1.0, help="Late fee per day (default = 1.0)")
+    parser.add_argument("--output-books", type=str, default="cleaned_books.csv", help="Output filename for cleaned books")
+    parser.add_argument("--output-customers", type=str, default="cleaned_cust.csv", help="Output filename for cleaned customers")
 
     args = parser.parse_args()
 
@@ -93,53 +80,20 @@ def main():
     books_df.columns = books_df.columns.str.strip()
     cust_df.columns = cust_df.columns.str.strip()
 
-    # Apply cleaning
+    # -------------------------
+    # Cleaning
+    # -------------------------
     books_df = remove_missing_values(books_df)
     cust_df = remove_missing_values(cust_df)
-
     books_df = clean_date_column(books_df, "Book checkout")
     books_df = clean_date_column(books_df, "Book Returned")
-
     books_df = drop_invalid_date_rows(books_df)
     books_df = convert_weeks_to_days(books_df)
 
     # -------------------------
     # Enrich Data
     # -------------------------
-    books_df["Days Borrowed"] = (
-        books_df["Book Returned"] - books_df["Book checkout"]
-    ).dt.days
-
-    books_df["Was Late"] = (
-        books_df["Days Borrowed"] > books_df["Days allowed to borrow"]
-    )
-
-    books_df["Date Miss Match"] = (
-        books_df["Days Borrowed"] < 0
-    )
-
-    books_df["Days Late"] = (
-        books_df["Days Borrowed"] - books_df["Days allowed to borrow"]
-    ).clip(lower=0)
-
-    books_df["Returned Early"] = (
-        books_df["Days Borrowed"] < books_df["Days allowed to borrow"]
-    )
-
-    books_df["Checkout Day Name"] = (
-        books_df["Book checkout"].dt.day_name()
-    )
-
-    books_df["Checkout Month"] = (
-        books_df["Book checkout"].dt.month_name()
-    )
-
-    books_df["Checkout Year"] = (
-        books_df["Book checkout"].dt.year
-    )
-
-    # Late fee configurable via CLI
-    books_df["Late Fee"] = books_df["Days Late"] * args.late_fee
+    books_df = enrich_books(books_df, late_fee=args.late_fee)
 
     # -------------------------
     # Save Files
