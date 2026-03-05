@@ -1,5 +1,5 @@
 
 ## Power BI Dashboard
 
-![Power BI Dashboard](images/PBI%20Dashboard.png)
+![Power BI Dashboard](PBI%20Dashboard.png)
 
