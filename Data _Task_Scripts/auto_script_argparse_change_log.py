@@ -2,6 +2,7 @@ from pathlib import Path
 import pandas as pd
 import argparse
 import datetime
+import time  # Added for runtime tracking
 
 # Global changes log to track modifications
 changes_log = []
@@ -10,7 +11,7 @@ changes_log = []
 def log_change(action, details, df_name, before_rows=None, after_rows=None, before_cols=None, after_cols=None, dropped_rows=None):
 
     changes_log.append({
-        "Timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "Timestamp": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
         "Action": action,
         "Details": details,
         "DataFrame": df_name,
@@ -18,7 +19,7 @@ def log_change(action, details, df_name, before_rows=None, after_rows=None, befo
         "Rows After": after_rows,
         "Columns Before": before_cols,
         "Columns After": after_cols,
-        "Dropped Rows": dropped_rows,  # New column to track dropped rows
+        "Dropped Rows": dropped_rows,
     })
 
 
@@ -109,6 +110,10 @@ def enrich_books(df: pd.DataFrame, late_fee: float = 1.0, df_name="Books") -> pd
 
 
 def main():
+
+    # Start timer
+    start_time = time.time()
+
     # -------------------------
     # Argument Parser Setup
     # -------------------------
@@ -159,7 +164,22 @@ def main():
     books_df.to_csv(args.output_books, index=False)
     cust_df.to_csv(args.output_customers, index=False)
 
-    # Export Changes Log to CSV
+    # -------------------------
+    # Track total runtime
+    # -------------------------
+    end_time = time.time()
+    elapsed_seconds = int(end_time - start_time)
+    runtime = str(datetime.timedelta(seconds=elapsed_seconds))
+
+    log_change(
+        "Time taken to clean",
+        runtime,
+        "CleanTime"
+    )
+
+    # -------------------------
+    # Export Changes Log
+    # -------------------------
     changes_df = pd.DataFrame(changes_log)
     changes_df.to_csv(args.changes_log, index=False)
 

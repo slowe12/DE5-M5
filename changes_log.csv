@@ -1,6 +1,7 @@
 Timestamp,Action,Details,DataFrame,Rows Before,Rows After,Columns Before,Columns After,Dropped Rows
-2026-03-04 16:10:06,Remove Missing Values,Dropped 94 rows,Books,114,20,6.0,6.0,94.0
-2026-03-04 16:10:06,Remove Missing Values,Dropped 1 rows,Customers,9,8,2.0,2.0,1.0
-2026-03-04 16:10:06,Clean Date Column,Converted 1 entries to NaT in 'Book checkout',Books,20,20,,,
-2026-03-04 16:10:06,Drop Invalid Date Rows,Dropped 1 rows due to missing dates,Books,20,19,6.0,6.0,1.0
-2026-03-04 16:10:06,Enrich Books Data,Added 9 new columns,Books,19,19,6.0,15.0,
+05/03/2026 13:49,Remove Missing Values,Dropped 94 rows,Books,114.0,20.0,6.0,6.0,94.0
+05/03/2026 13:49,Remove Missing Values,Dropped 1 rows,Customers,9.0,8.0,2.0,2.0,1.0
+05/03/2026 13:49,Clean Date Column,Converted 1 entries to NaT in 'Book checkout',Books,20.0,20.0,,,
+05/03/2026 13:49,Drop Invalid Date Rows,Dropped 1 rows due to missing dates,Books,20.0,19.0,6.0,6.0,1.0
+05/03/2026 13:49,Enrich Books Data,Added 9 new columns,Books,19.0,19.0,6.0,15.0,
+05/03/2026 13:49,Time taken to clean,0:00:00,CleanTime,,,,,
